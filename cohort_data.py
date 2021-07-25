@@ -1,7 +1,9 @@
 """Functions to parse a file containing student data."""
 
+  
 
 def all_houses(filename):
+
     """Return a set of all house names in the given file.
 
     For example:
@@ -12,14 +14,23 @@ def all_houses(filename):
       - filename (str): the path to a data file
 
     Return:
-      - set[str]: a set of strings
+
+    for      - set[str]: a set of strings
+
     """
+    cohort_data = open(filename)
+    houses_list = []  
+    for line in cohort_data:
+      cohort_information = line.split("|")
+      house = cohort_information[2] 
+      if house != '':
+        houses_list.append(house)
 
-    houses = set()
-
-    # TODO: replace this with your code
+    houses = set(houses_list)
 
     return houses
+
+
 
 
 def students_by_cohort(filename, cohort='All'):
@@ -49,9 +60,15 @@ def students_by_cohort(filename, cohort='All'):
     Return:
       - list[list]: a list of lists
     """
-
-    students = []
-
+    cohort_data = open(filename)
+    students = []  
+    for line in cohort_data:
+      cohort_information = line.split("|")
+      fullname = f"{cohort_information[0]} {cohort_information[1]}"
+      if cohort_information[4].strip() == cohort:
+        students.append(fullname)
+      elif cohort == 'All' and cohort_information[4].strip() != 'I' and cohort_information[4].strip() != 'G':
+        students.append(fullname)
     # TODO: replace this with your code
 
     return sorted(students)
